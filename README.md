@@ -154,7 +154,9 @@ WAR Packaging
 2️⃣ Configure database: Update DBConnection.java or connection pool (if improved version is used):
 
 jdbc:mysql://localhost:3306/quiz_platform
+
 user=root
+
 password=
 
 3️⃣ Build project:   mvn clean package
