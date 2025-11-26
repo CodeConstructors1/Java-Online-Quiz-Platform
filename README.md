@@ -1,177 +1,162 @@
-Java Web-Based Quiz Platform
+# Java Online Quiz Platform 🎯
 
-  A full-featured Java web application built using Servlets, JSP, JDBC (MySQL), and MVC architecture.
-  
-  The system supports Admin, Creator, and Participant roles with complete quiz lifecycle management.
+A full-featured *Java Web-Based Quiz Platform* built with *Servlets, JSP, JDBC (MySQL)* and clean *MVC architecture*.  
+It supports *Admin, Creator, and Participant* roles and manages the *entire quiz lifecycle* – from creation and approval to attempting and reporting.
 
-  Features
-  
-👤 User Management
+---
 
-Secure login using BCrypt-hashed passwords
+## 🚀 Highlights
 
-Roles: ADMIN, CREATOR, PARTICIPANT
+- 🔐 Secure authentication with *BCrypt-hashed passwords*
+- 👥 Role-based access: *ADMIN / CREATOR / PARTICIPANT*
+- 🧩 Quiz builder with multiple questions & options
+- ✅ Admin quiz approval workflow
+- ⏱ Timed quiz attempts (client + server enforced)
+- 📊 Attempt history, simple leaderboard & *Chart.js* powered admin dashboard
+- 🧱 Clean *MVC + DAO*-based architecture
+- 🛠 Built with *Maven, deployable as a **WAR* on any servlet container
 
-Admin can create, update, delete users
+---
 
-Session-based authentication + /admin/* protected by filter
+## 📚 Table of Contents
 
-Quiz Creation (CREATOR)
+1. [Features](#-features)
+2. [Architecture](#-project-architecture)
+3. [Technology Stack](#-technology-stack)
+4. [Getting Started](#-getting-started)
+   - [Prerequisites](#prerequisites)
+   - [Clone the Repository](#1-clone-the-repository)
+   - [Database Setup](#2-database-setup)
+   - [Configure Database Connection](#3-configure-database-connection)
+   - [Build with Maven](#4-build-with-maven)
+   - [Deploy to Tomcat / Servlet Container](#5-deploy-to-tomcat--any-servlet-container)
+5. [Application Walkthrough](#-application-walkthrough)
+   - [Authentication & Roles](#authentication--roles)
+   - [Admin Flow](#admin)
+   - [Creator Flow](#creator)
+   - [Participant Flow](#participant)
+6. [Security Notes](#-security--best-practices)
+7. [Project Structure](#-detailed-project-structure)
+8. [Future Enhancements](#-future-enhancements-ideas)
+9. [License](#-license)
 
-Create quiz metadata (title, description, duration)
+---
 
-Add unlimited questions with:
+## ✨ Features
 
-Question text
+### 👤 User Management
 
-Options A/B/C/D
+- Secure login using *BCrypt-hashed passwords*
+- Supported roles:
+  - ADMIN
+  - CREATOR
+  - PARTICIPANT
+- Admin capabilities:
+  - Create, update, delete users
+  - Assign / change roles
+- *Session-based authentication*
+- /admin/* protected via *Servlet Filter*
+- Optional role-based filters (e.g., RoleFilter) can be enabled for fine-grained control
 
-Correct option
+---
 
-Marks per question
+### 🧱 Quiz Creation (CREATOR)
 
-Quizzes remain pending for admin approval
+- Create *quiz metadata*:
+  - Title
+  - Description
+  - Duration (in minutes)
+- Add *unlimited questions* per quiz with:
+  - Question text
+  - Options: *A / B / C / D*
+  - Correct option
+  - Marks per question
+- Created quizzes are saved as *PENDING* and require *Admin approval* before they become visible to participants.
 
-✔️ Quiz Approval (ADMIN)
+---
 
-View all pending quizzes
+### ✔ Quiz Approval (ADMIN)
 
-Approve / Reject quizzes
+- View all *pending quizzes*
+- *Approve / Reject* quizzes
+  - Approved quizzes become visible to participants
+  - Rejected quizzes can be edited or recreated
+- Manage users and roles
+- *Admin Dashboard*:
+  - Visual stats using *Chart.js* (e.g. number of quizzes, attempts, users, etc.)
 
-Manage users
+---
 
-View admin dashboard with Chart.js visual reports
+### 🎮 Quiz Taking (Participant)
 
-🎮 Quiz Taking (Participant)
+- View all *approved quizzes*
+- Start quiz → attempt is *recorded in DB*
+- *Timed quiz*:
+  - Client-side countdown (JavaScript timer)
+  - Server-side enforcement of duration for security
+- On submit:
+  - Answers are stored securely in DB
+  - Score is *calculated automatically*
+- Show:
+  - Quiz result
+  - Attempt summary
 
-View all approved quizzes
+---
 
-Start quiz → attempt is recorded
+### 📊 Reports
 
-Ticking timer (client-side) + server-side time enforcement
+- *Attempt history* per participant
+- *Simple leaderboard* (demonstration-level; can be extended)
+- Admin view:
+  - Global statistics
+  - Performance overview via *Chart.js*
 
-Submit answers → stored securely in DB
+---
 
-Auto-calculated total score
+## 🧱 Project Architecture
 
-Results page displayed
-
-📊 Reports
-
-Attempt history for participants
-
-Simple leaderboard view (demo)
-
-Admin performance chart using Chart.js
-
-🏗️ Project Architecture
-
+```bash
 quiz-platform/
-
 ├─ pom.xml
-
 ├─ src/
-
 │  ├─ main/
-
 │  │  ├─ java/com/quizapp/
-
-│  │  │  ├─ dao/ (DBConnection, UserDAO, QuizDAO, QuestionDAO, AttemptDAO, AnswerDAO)
-
-│  │  │  ├─ model/ (User, Quiz, Question, Attempt, Answer)
-
-│  │  │  ├─ servlet/ (AuthServlet, AdminServlet, QuizServlet, CreatorServlet, ReportServlet)
-
-│  │  │  ├─ filter/ (AuthFilter, optional RoleFilter/CSRF)
-
-│  │  │  └─ util/ (PasswordUtil, other helpers)
-
+│  │  │  ├─ dao/
+│  │  │  │  ├─ DBConnection.java
+│  │  │  │  ├─ UserDAO.java
+│  │  │  │  ├─ QuizDAO.java
+│  │  │  │  ├─ QuestionDAO.java
+│  │  │  │  ├─ AttemptDAO.java
+│  │  │  │  └─ AnswerDAO.java
+│  │  │  ├─ model/
+│  │  │  │  ├─ User.java
+│  │  │  │  ├─ Quiz.java
+│  │  │  │  ├─ Question.java
+│  │  │  │  ├─ Attempt.java
+│  │  │  │  └─ Answer.java
+│  │  │  ├─ servlet/
+│  │  │  │  ├─ AuthServlet.java
+│  │  │  │  ├─ AdminServlet.java
+│  │  │  │  ├─ QuizServlet.java
+│  │  │  │  ├─ CreatorServlet.java
+│  │  │  │  └─ ReportServlet.java
+│  │  │  ├─ filter/
+│  │  │  │  ├─ AuthFilter.java
+│  │  │  │  └─ (RoleFilter.java / CsrfFilter.java - optional)
+│  │  │  └─ util/
+│  │  │     ├─ PasswordUtil.java
+│  │  │     └─ other helpers...
 │  │  ├─ webapp/
-
 │  │  │  ├─ WEB-INF/
-
 │  │  │  │  ├─ web.xml
-
 │  │  │  │  └─ jsp/
-
 │  │  │  │     ├─ admin/dashboard.jsp
-
 │  │  │  │     ├─ admin/pending.jsp
-
 │  │  │  │     └─ admin/users.jsp
-
 │  │  │  ├─ index.jsp
-
 │  │  │  ├─ login.jsp
-
 │  │  │  ├─ quizzes.jsp
-
 │  │  │  ├─ take_quiz_timed.jsp
-
 │  │  │  └─ quiz_result.jsp
-
-│  └─ test/ (unit / integration tests)
-
-└─ README.md
-
-🛠️ Technologies Used
-
-Backend
-
-Java 8+ (or 23 since your pom specifies 23)
-
-Servlet API 4.0.1
-
-JSP 2.3
-
-BCrypt (jbcrypt) for password hashing
-
-JDBC + PreparedStatement
-
-MySQL
-
-HikariCP (Connection Pooling, recommended)
-
-Frontend
-
-HTML, CSS, JSP
-
-JSTL
-
-Chart.js (Admin dashboard chart)
-
-Build Tool
-
-Maven
-
-WAR Packaging
-
-
-⚙️ How to Run the Project
-
-1️⃣ Clone the repository: https://github.com/CodeConstructors1/Java-Online-Quiz-Platform.git
-
-2️⃣ Configure database: Update DBConnection.java or connection pool (if improved version is used):
-
-jdbc:mysql://localhost:3306/quiz_platform
-
-user=root
-
-password=
-
-3️⃣ Build project:   mvn clean package
-
-4️⃣ Deploy WAR file:
-
-Deploy quiz-platform-full.war to:
-
-Apache Tomcat 9/10
-
-Jetty
-
-Any Java EE servlet container
-
-5️⃣ Access application: http://localhost:8080/quiz-platform-full/
-
-
-
+│  └─ test/
+├─ README.md
