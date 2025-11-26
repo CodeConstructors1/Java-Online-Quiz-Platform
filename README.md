@@ -18,29 +18,38 @@ It supports *Admin, Creator, and Participant* roles and manages the *entire quiz
 
 ---
 
-## 📚 Table of Contents
+### 🛠 Technologies Used
 
-1. [Features](#-features)
-2. [Architecture](#-project-architecture)
-3. [Technology Stack](#-technology-stack)
-4. [Getting Started](#-getting-started)
-   - [Prerequisites](#prerequisites)
-   - [Clone the Repository](#1-clone-the-repository)
-   - [Database Setup](#2-database-setup)
-   - [Configure Database Connection](#3-configure-database-connection)
-   - [Build with Maven](#4-build-with-maven)
-   - [Deploy to Tomcat / Servlet Container](#5-deploy-to-tomcat--any-servlet-container)
-5. [Application Walkthrough](#-application-walkthrough)
-   - [Authentication & Roles](#authentication--roles)
-   - [Admin Flow](#admin)
-   - [Creator Flow](#creator)
-   - [Participant Flow](#participant)
-6. [Security Notes](#-security--best-practices)
-7. [Project Structure](#-detailed-project-structure)
-8. [Future Enhancements](#-future-enhancements-ideas)
-9. [License](#-license)
+Backend
 
----
+Java 8+ (or 23 since your pom specifies 23)
+
+Servlet API 4.0.1
+
+JSP 2.3
+
+BCrypt (jbcrypt) for password hashing
+
+JDBC + PreparedStatement
+
+MySQL
+
+HikariCP (Connection Pooling, recommended)
+
+Frontend
+
+HTML, CSS, JSP
+
+JSTL
+
+Chart.js (Admin dashboard chart)
+
+Build Tool
+
+Maven
+
+WAR Packaging
+
 
 ## ✨ Features
 
@@ -112,6 +121,31 @@ It supports *Admin, Creator, and Participant* roles and manages the *entire quiz
   - Performance overview via *Chart.js*
 
 ---
+### ⚙ How to Run the Project
+
+⿡ Clone the repository: https://github.com/CodeConstructors1/Java-Online-Quiz-Platform.git
+
+⿢ Configure database: Update DBConnection.java or connection pool (if improved version is used):
+
+jdbc:mysql://localhost:3306/quiz_platform
+
+user=root
+
+password=
+
+⿣ Build project: mvn clean package
+
+⿤ Deploy WAR file:
+
+Deploy quiz-platform-full.war to:
+
+Apache Tomcat 9/10
+
+Jetty
+
+Any Java EE servlet container
+
+⿥ Access application: http://localhost:8080/quiz-platform-full/
 
 ## 🧱 Project Architecture
 
@@ -161,29 +195,5 @@ quiz-platform/
 │  └─ test/
 ├─ README.md
 
-### ⚙ How to Run the Project
 
-⿡ Clone the repository: https://github.com/CodeConstructors1/Java-Online-Quiz-Platform.git
 
-⿢ Configure database: Update DBConnection.java or connection pool (if improved version is used):
-
-jdbc:mysql://localhost:3306/quiz_platform
-
-user=root
-
-password=
-
-⿣ Build project: mvn clean package
-
-⿤ Deploy WAR file:
-
-Deploy quiz-platform-full.war to:
-
-Apache Tomcat 9/10
-
-Jetty
-
-Any Java EE servlet container
-
-⿥ Access application: http://localhost:8080/quiz-platform-full/
-write full fasicante code for readme file
